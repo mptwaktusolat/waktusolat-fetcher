@@ -1,38 +1,45 @@
 import json
 import os
-from pprint import pprint
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import firestore
 
-# Use a service account.
-cred = credentials.Certificate('adminsdk-creds.json')
 
-app = firebase_admin.initialize_app(cred)
+def push_to_firebase():
+    # Use a service account.
+    cred = credentials.Certificate('adminsdk-creds.json')
 
-db = firestore.client()
+    app = firebase_admin.initialize_app(cred)
 
-# Open *=*.processed.json file
-y = os.listdir("../outputs")
+    db = firestore.client()
 
-processed_file = [x for x in y if x.endswith(".processed.json")][0]
+    # Open *=*.processed.json file
+    y = os.listdir("outputs")
 
-# extract month and year from filename
-x = processed_file.split(".")[0]
-month, year = x.split("-")
+    print('here')
+    print(y)
 
-print(f"Want to push for {month} {year}")
+    processed_file = [x for x in y if x.endswith(".processed.json")][0]
 
-month_ref = db.collection('waktusolat').document(f'{year}').collection(month)
+    print('here2')
+    print(processed_file)
 
-with open(f'outputs/{processed_file}') as f:
-    raw_data = json.load(f)
+    # extract month and year from filename
+    x = processed_file.split(".")[0]
+    month, year = x.split("-")
 
-# iterate the zones
-for zone in raw_data["processed"]:
-    zone_name = zone["zone"]
-    prayer_times = zone["prayerTime"]
+    print(f"Want to push for {month} {year}")
 
-    # push to firebase
-    z = month_ref.document(zone_name).set({"prayerTime": prayer_times})
-    print(":white_check_mark: Pushed", zone_name)
+    month_ref = db.collection('waktusolat').document(f'{year}').collection(month)
+
+    with open(f'outputs/{processed_file}') as f:
+        raw_data = json.load(f)
+
+    # iterate the zones
+    for zone in raw_data["processed"]:
+        zone_name = zone["zone"]
+        prayer_times = zone["prayerTime"]
+
+        # push to firebase
+        z = month_ref.document(zone_name).set({"prayerTime": prayer_times})
+        print(":white_check_mark: Pushed", zone_name)

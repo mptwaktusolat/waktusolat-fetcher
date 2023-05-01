@@ -4,7 +4,7 @@ from zoneinfo import ZoneInfo
 from datetime import datetime, timezone
 
 
-def process_data(filename):
+def parse_processor_data(filename):
     """
     This function will read the given filename.
     It will parse the prayer time and convert into epoch timestamp
@@ -88,7 +88,8 @@ def process_data(filename):
     print('\n')  # spare a new line
 
 
-# iterate all files in outputs folder and process them
-for file in os.listdir("../outputs"):
-    if file.endswith(".json") and not file.endswith("processed.json"):
-        process_data(file)
+def process_db():
+    # iterate all files in outputs folder and process them
+    for file in os.listdir("outputs"):
+        if file.endswith(".json") and not file.endswith("processed.json"):
+            parse_processor_data(file)
