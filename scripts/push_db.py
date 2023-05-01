@@ -13,7 +13,7 @@ app = firebase_admin.initialize_app(cred)
 db = firestore.client()
 
 # Open *=*.processed.json file
-y = os.listdir("outputs")
+y = os.listdir("../outputs")
 
 processed_file = [x for x in y if x.endswith(".processed.json")][0]
 

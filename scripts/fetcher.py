@@ -12,18 +12,19 @@ urllib3.disable_warnings()  # disable certificate error warning
 
 reqUrl = "https://www.e-solat.gov.my/index.php"
 
-# jakim_code = [
-#     "JHR01", "JHR02", "JHR03", "JHR04", "KDH01", "KDH02", "KDH03", "KDH04",
-#     "KDH05", "KDH06", "KDH07", "KTN01", "KTN03", "MLK01", "NGS01", "NGS02",
-#     "PHG01", "PHG02", "PHG03", "PHG04", "PHG05", "PHG06", "PRK01", "PRK02",
-#     "PRK03", "PRK04", "PRK05", "PRK06", "PRK07", "PLS01", "PNG01", "SBH01",
-#     "SBH02", "SBH03", "SBH04", "SBH05", "SBH06", "SBH07", "SBH08", "SBH09",
-#     "SGR01", "SGR02", "SGR03", "SWK01", "SWK02", "SWK03", "SWK04", "SWK05",
-#     "SWK06", "SWK07", "SWK08", "SWK09", "TRG01", "TRG02", "TRG03", "TRG04",
-#     "WLY01", "WLY02"
-# ]  # Total 58
+jakim_code = [
+    "JHR01", "JHR02", "JHR03", "JHR04", "KDH01", "KDH02", "KDH03", "KDH04",
+    "KDH05", "KDH06", "KDH07", "KTN01", "KTN02", "MLK01", "NGS01", "NGS02", "NGS03",
+    "PHG01", "PHG02", "PHG03", "PHG04", "PHG05", "PHG06", "PRK01", "PRK02",
+    "PRK03", "PRK04", "PRK05", "PRK06", "PRK07", "PLS01", "PNG01", "SBH01",
+    "SBH02", "SBH03", "SBH04", "SBH05", "SBH06", "SBH07", "SBH08", "SBH09",
+    "SGR01", "SGR02", "SGR03", "SWK01", "SWK02", "SWK03", "SWK04", "SWK05",
+    "SWK06", "SWK07", "SWK08", "SWK09", "TRG01", "TRG02", "TRG03", "TRG04",
+    "WLY01", "WLY02"
+]  # Total 59
 
-jakim_code = ["SGR01", "PRK02", "SWK01"]
+# for testing
+jakim_code = ["SWK08"]
 
 data = {}
 data['jakim'] = []
@@ -89,12 +90,16 @@ while len(jakim_code) != 0:
 
 # Don't be scared, this block of code just for logging time
 fetch_finish = datetime.now(ZoneInfo('Asia/Kuala_Lumpur'))
-fetch_finish = fetch_finish.strftime("%c %z")
+fetch_finish = int(fetch_finish.timestamp())  # number of seconds since epoch
 print(f'\nFetching finish at {fetch_finish}')
 data['last_fetched'] = fetch_finish
 
 # writing all location data to file
-os.makedirs('outputs', exist_ok=True)
+os.makedirs('../outputs', exist_ok=True)
+
+# ImportantL The filename format is "Month-Year.json", do not
+# simply change the implementation because some function preceeding
+# will need to determine date etc based on the filename
 filename = f'outputs/{fetch_date_target.strftime("%b-%Y")}.json'
 
 with open(filename, 'w+') as outfile:
