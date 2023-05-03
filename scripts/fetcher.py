@@ -9,7 +9,7 @@ import requests
 import urllib3
 
 
-def fetch_data():
+def fetch_data(relative_month:int):
     urllib3.disable_warnings()  # disable certificate error warning
 
     reqUrl = "https://www.e-solat.gov.my/index.php"
@@ -32,16 +32,17 @@ def fetch_data():
     data['jakim'] = []
 
     # Get next month
-    fetch_date_target = datetime.now() + relativedelta(months=1)
+    fetch_date_target = datetime.now() + relativedelta(months=relative_month)
     fetch_month = fetch_date_target.month
     fetch_year = fetch_date_target.year
 
     last_day_of_next_month = (fetch_date_target.replace(day=1) +
-                              relativedelta(months=1) - relativedelta(days=1)).day
+                              relativedelta(months=relative_month) - relativedelta(days=1)).day
 
     print(f'Total of {len(jakim_code)}')
 
     print(f'Fetching for {fetch_date_target.strftime("%B")} {fetch_year}')
+
     print('\nStarting\n')
 
     attempt_count = 0

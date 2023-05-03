@@ -24,11 +24,17 @@ To view all available commands, run:
 py main.py -h
 ```
 
+To view help for specific command, run:
+
+```pwsh
+py main.py <command> -h
+```
+
 ### `fetch`
 
 **Step 1**: This command will fetch the prayer time data for all states for the 
-upcoming month. For example, now you are on May 2023, it will fetch
-the data for June 2023. A file `month-year.json` will be produced.
+current month (default). If you want to fetch for other month, you can pass the 
+`--relative-month` arguments (accepts integer input). A file `month-year.json` will be produced.
 
 **Step 2**: Next, the date time will be parsed and save as UNIX timestamp (seconds). Another 
 output file will be produced (`month-year.processed.json`).
