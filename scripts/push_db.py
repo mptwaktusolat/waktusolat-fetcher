@@ -16,19 +16,16 @@ def push_to_firebase():
     # Open *=*.processed.json file
     y = os.listdir("outputs")
 
-    print('here')
-    print(y)
-
+    # TODO: Maybe loop through all processed files in outputs folder
     processed_file = [x for x in y if x.endswith(".processed.json")][0]
 
-    print('here2')
     print(processed_file)
 
     # extract month and year from filename
     x = processed_file.split(".")[0]
     month, year = x.split("-")
 
-    print(f"Want to push for {month} {year}")
+    print(f"ℹ️ Want to push for {month} {year}")
 
     month_ref = db.collection('waktusolat').document(f'{year}').collection(month)
 
@@ -42,4 +39,4 @@ def push_to_firebase():
 
         # push to firebase
         z = month_ref.document(zone_name).set({"prayerTime": prayer_times})
-        print(":white_check_mark: Pushed", zone_name)
+        print("✅ Pushed", zone_name)

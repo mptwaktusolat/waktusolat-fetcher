@@ -69,21 +69,21 @@ def parse_processor_data(filename):
         solat_data = {"zone": zone["zone"], "prayerTime": prayer_times_zone}
 
         data['processed'].append(solat_data)
-        print(f"Processed {zone['zone']}")
+        print(f"🕰️ Processed {zone['zone']}")
 
     # bring forward the last_fetched time
     data['last_fetched'] = raw_data['last_fetched']
 
     process_finish = datetime.now(ZoneInfo('Asia/Kuala_Lumpur'))
     process_finish = int(process_finish.timestamp())
-    print(f'\n:white_check_mark: Process finish at {process_finish}')
+    print(f'\n✅: Process finish at {process_finish}')
     data['last_processed'] = process_finish
 
     # write to json file
     filename = f'outputs/{month}-{year}.processed.json'
     with open(filename, 'w+') as f:
         json.dump(data, f, indent=2)
-        print(f':white_check_mark: Finish writing to {filename}')
+        print(f'✅: Finish writing to {filename}')
 
     print('\n')  # spare a new line
 

@@ -12,28 +12,27 @@ jobs:
   run_cli:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repo
+      - name: 📥 Checkout repo
         uses: actions/checkout@v3
 
-      - name: setup python
+      - name: 🐍🛠️ setup python
         uses: actions/setup-python@v4
         with:
           python-version: '3.11'
 
       # File can be encoded to base64 on https://base64.guru/converter/encode/file
-      - name: Decoding Firebase Admin SDK Credentials
+      - name: 🔑🔓 Decoding Firebase Admin SDK Credentials
         run: echo "${{ secrets.ADMIN_SDK_FIREBASE_CREDS }}" | base64 --decode > adminsdk-creds.json
 
-      - name: install python packages
+      - name: 📦💻 install python packages
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: execute py script
+      - name: 🏃‍♀️🐍💻 execute py script
         run: python main.py ${{ inputs.cli_args }}
 
-      - name: Upload file(s) to artifacts
+      - name: 📤📦 Upload file(s) to artifacts
         uses: actions/upload-artifact@v3
         with:
           path: outputs
-
