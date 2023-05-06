@@ -41,7 +41,7 @@ def fetch_data(relative_month:int):
 
     print(f'Total of {len(jakim_code)}')
 
-    print(f'Fetching for {fetch_date_target.strftime("%B")} {fetch_year}')
+    print(f'ℹ️ Fetching for {fetch_date_target.strftime("%B")} {fetch_year}')
 
     print('\nStarting\n')
 
@@ -51,8 +51,8 @@ def fetch_data(relative_month:int):
     while len(jakim_code) != 0:
         if (attempt_count > 0):
             failed = '", "'.join(x for x in jakim_code)
-            print(f'\nFailed to fetch: "{failed}"')
-            print(f'\nRetrying failed requests. Attempt #{attempt_count}\n')
+            print(f'\n💔 Failed to fetch: "{failed}"')
+            print(f'\n🔄 Retrying failed requests. Attempt #{attempt_count}\n')
 
         # Iterate each of the JAKIM code
         for zone in jakim_code:

@@ -27,7 +27,7 @@ def push_to_firebase():
 
     print(f"ℹ️ Want to push for {month} {year}")
 
-    month_ref = db.collection('waktusolat').document(f'{year}').collection(month)
+    month_ref = db.collection('waktusolat').document(f'{year}').collection(month.upper())
 
     with open(f'outputs/{processed_file}') as f:
         raw_data = json.load(f)
@@ -39,4 +39,10 @@ def push_to_firebase():
 
         # push to firebase
         z = month_ref.document(zone_name).set({"prayerTime": prayer_times})
-        print("✅ Pushed", zone_name)
+        print("🚀 Pushed", zone_name)
+
+    # record the last update data
+    year_ref = db.collection('waktusolat').document(f'{year}')
+    new_data = {"last_updated": {month.upper(): firestore.firestore.SERVER_TIMESTAMP }}
+    year_ref.set(new_data, merge=True)
+
