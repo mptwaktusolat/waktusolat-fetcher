@@ -36,3 +36,8 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           path: outputs
+
+      - name: 📝 Record input(s)
+        run: |
+          echo "## Input given:" >> $GITHUB_STEP_SUMMARY
+          echo \`${{ inputs.cli_args }}\` >> $GITHUB_STEP_SUMMARY
