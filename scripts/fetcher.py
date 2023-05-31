@@ -36,8 +36,9 @@ def fetch_data(relative_month:int):
     fetch_month = fetch_date_target.month
     fetch_year = fetch_date_target.year
 
-    last_day_of_next_month = (fetch_date_target.replace(day=1) +
-                              relativedelta(months=relative_month) - relativedelta(days=1)).day
+    # Get last day of next month (For whatever given month, it will limit to the last day of the month)
+    last_day_of_next_month = (fetch_date_target +
+                              relativedelta(day=31)).day
 
     print(f'Total of {len(jakim_code)}')
 
