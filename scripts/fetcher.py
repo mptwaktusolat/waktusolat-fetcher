@@ -9,7 +9,10 @@ import requests
 import urllib3
 
 
-def fetch_data(relative_month:int):
+def fetch_data(relative_month: int):
+    """
+    Fetch data from the given relative month
+    """
     urllib3.disable_warnings()  # disable certificate error warning
 
     reqUrl = "https://www.e-solat.gov.my/index.php"
@@ -26,7 +29,8 @@ def fetch_data(relative_month:int):
     ]  # Total 59
 
     # for testing
-    # jakim_code = ["SWK08"]
+    # jakim_code = ["JHR01", "JHR02"]
+    # jakim_code = ["KDH01", "KDH02"]
 
     data = {}
     data['jakim'] = []
@@ -70,18 +74,20 @@ def fetch_data(relative_month:int):
                 "Content-Type": "application/x-www-form-urlencoded"
             }
 
-            response = requests.post(reqUrl,
-                                     params=params,
-                                     data=payload,
-                                     headers=headers,
-                                     verify=False)
+            response = requests.post(
+                reqUrl, params=params, data=payload, headers=headers, verify=False, timeout=5)
 
             json_response = response.json()
 
             # Only put into json if everything's fine
-            if (response.status_code == 200) and json_response['status'] == 'OK!':
-                print(f"{zone} : {json_response['status']}")
-                data['jakim'].append(json_response)
+            if (response.status_code == 200):
+                response_code = json_response['status']
+                if response_code == 'OK!':
+                    print(f"{zone} : {response_code}")
+                    data['jakim'].append(json_response)
+                else:
+                    print(f'{zone} : Failed ({response_code}). Skipping for now')
+
                 jakim_code.remove(zone)
             else:
                 print(f'{zone} : Failed ({response.status_code})')
@@ -94,7 +100,8 @@ def fetch_data(relative_month:int):
 
     # Don't be scared, this block of code just for logging time
     fetch_finish = datetime.now(ZoneInfo('Asia/Kuala_Lumpur'))
-    fetch_finish = int(fetch_finish.timestamp())  # number of seconds since epoch
+    # number of seconds since epoch
+    fetch_finish = int(fetch_finish.timestamp())
     print(f'\nFetching finish at {fetch_finish}')
     data['last_fetched'] = fetch_finish
 
@@ -109,3 +116,8 @@ def fetch_data(relative_month:int):
     with open(filename, 'w+') as outfile:
         json.dump(data, outfile, indent=2)
         print(f'\n✅Finish writing to {filename}')
+
+
+if __name__ == "__main__":
+    print("This script is not meant to invoke by itself. So use this to debugging only")
+    fetch_data(8)
