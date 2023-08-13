@@ -7,6 +7,8 @@ on:
         description: "Commands"
         default: fetch
         required: true
+  schedule:
+    - cron: "40 2 15 * *" # “At 02:40 on day-of-month 15.”
 
 jobs:
   run_cli:
@@ -18,7 +20,7 @@ jobs:
       - name: 🐍🛠️ setup python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.11'
+          python-version: "3.11"
 
       # File can be encoded to base64 on https://base64.guru/converter/encode/file
       - name: 🔑🔓 Decoding Firebase Admin SDK Credentials
@@ -30,7 +32,7 @@ jobs:
           pip install -r requirements.txt
 
       - name: 🏃‍♀️🐍💻 execute py script
-        run: python main.py ${{ inputs.cli_args }}
+        run: python main.py ${{ inputs.cli_args || 'fetch --relative-month 1' }}
 
       - name: 📤📦 Upload file(s) to artifacts
         uses: actions/upload-artifact@v3
