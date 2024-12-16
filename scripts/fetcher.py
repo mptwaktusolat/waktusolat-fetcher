@@ -92,9 +92,8 @@ def fetch_data(relative_month: int):
             else:
                 print(f'{zone} : Failed ({response.status_code})')
 
-            # Pause 1.7 secs before the next api call
-            # to prevent 'ddos' to their server
-            time.sleep(1.7)
+            # Adding artificial delay to prevent 'ddosing' their server
+            time.sleep(2.0)
 
         attempt_count += 1
 
