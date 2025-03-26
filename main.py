@@ -18,20 +18,10 @@ def main():
     fetch_parser.add_argument('--relative-month', help='Relative month to fetch. Example: 0 for current month, 1 for next month, -1 for previous month', type=int, required=False, default=0)
     fetch_parser.add_argument('--no-push', help='Skip pushing to Firebase', action='store_true')
 
-    # process_parser = subparsers.add_parser('process', help='Process data')
-    # process_parser.add_argument('file', help='Path to data file to process')
-
     # Call the appropriate subcommand function based on the chosen command
     args = parser.parse_args()
     if args.command == 'fetch':
         fetch_flow(args)
-    # elif args.command == 'process':
-    #     mock_fun(args)
-
-
-def mock_fun(args):
-    print(args)
-
 
 def fetch_flow(args):
     # Step 1: Fetch all zones data

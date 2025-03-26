@@ -1,8 +1,6 @@
 # Waktu Solat fetcher (Malaysia)
 
-Simple CLI utility to fetch prayer time data from JAKIM.
-
-:construction: This is still **work-in-progress** :construction: Related to https://github.com/mptwaktusolat/mpt-server/issues/3
+Simple CLI utility to fetch (read: scrape) prayer time data from JAKIM.
 
 ## Get Started (Development)
 

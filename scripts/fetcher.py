@@ -26,10 +26,6 @@ def fetch_data(relative_month: int):
         "TRG02", "TRG03", "TRG04", "WLY01", "WLY02"
     ]  # Total 60
 
-    # for testing
-    # jakim_code = ["JHR01", "JHR02"]
-    # jakim_code = ["KDH01", "KDH02"]
-
     data = {}
     data['jakim'] = []
 

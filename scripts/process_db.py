@@ -1,7 +1,7 @@
 import json
 import os
 from zoneinfo import ZoneInfo
-from datetime import datetime, timezone
+from datetime import datetime
 
 
 def parse_processor_data(filename):
