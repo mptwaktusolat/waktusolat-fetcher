@@ -1,3 +1,11 @@
+> [!WARNING]
+>
+> # Deprecation notice
+>
+> The fetcher script is moved to [API Waktusolat Codebase](https://github.com/mptwaktusolat/api-waktusolat-x).
+
+---
+
 # Waktu Solat fetcher (Malaysia)
 
 Simple CLI utility to fetch (read: scrape) prayer time data from JAKIM.
