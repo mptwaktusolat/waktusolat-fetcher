@@ -29,8 +29,6 @@ def fetch_data(year: int, month: int):
         year: The year to fetch (e.g., 2025)
         month: The month to fetch (1-12)
     """
-    urllib3.disable_warnings()  # disable certificate error warning
-
     reqUrl = "https://www.e-solat.gov.my/index.php"
 
     jakim_code = fetch_zones()
