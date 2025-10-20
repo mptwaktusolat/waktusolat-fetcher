@@ -21,9 +21,13 @@ def fetch_zones():
     return jakim_codes
 
 
-def fetch_data(relative_month: int):
+def fetch_data(year: int, month: int):
     """
-    Fetch data from the given relative month
+    Fetch data for the given year and month
+    
+    Args:
+        year: The year to fetch (e.g., 2025)
+        month: The month to fetch (1-12)
     """
     urllib3.disable_warnings()  # disable certificate error warning
 
@@ -34,10 +38,10 @@ def fetch_data(relative_month: int):
     data = {}
     data['jakim'] = []
 
-    # Get next month
-    fetch_date_target = datetime.now() + relativedelta(months=relative_month)
-    fetch_month = fetch_date_target.month
-    fetch_year = fetch_date_target.year
+    # Use the provided year and month
+    fetch_year = year
+    fetch_month = month
+    fetch_date_target = datetime(year, month, 1)
 
     # Get last day of next month (For whatever given month, it will limit to the last day of the month)
     last_day_of_next_month = (fetch_date_target +
@@ -118,4 +122,5 @@ def fetch_data(relative_month: int):
 
 if __name__ == "__main__":
     print("This script is not meant to invoke by itself. So use this to debugging only")
-    fetch_data(8)
+    # Example: fetch data for June 2026
+    fetch_data(2026, 6)

@@ -15,7 +15,8 @@ def main():
     subparsers = parser.add_subparsers(title='subcommands', dest='command')
 
     fetch_parser = subparsers.add_parser('fetch', help='Fetch data from JAKIM')
-    fetch_parser.add_argument('--relative-month', help='Relative month to fetch. Example: 0 for current month, 1 for next month, -1 for previous month', type=int, required=False, default=0)
+    fetch_parser.add_argument('--year', help='Year to fetch (required). Will fetch all months (Jan-Dec) if --month is not specified', type=int, required=True)
+    fetch_parser.add_argument('--month', help='Specific month to fetch (1-12). If not specified, fetches all months for the year', type=int, choices=range(1, 13), metavar='1-12')
     fetch_parser.add_argument('--no-push', help='Skip pushing to Firebase', action='store_true')
 
     # Call the appropriate subcommand function based on the chosen command
@@ -26,7 +27,18 @@ def main():
 def fetch_flow(args):
     # Step 1: Fetch all zones data
     print('🚀 Fetch flow started. Step 1 Started')
-    fetcher.fetch_data(args.relative_month)
+    
+    if args.month:
+        # Fetch specific month
+        print(f'📅 Fetching data for {args.year}-{args.month:02d}')
+        fetcher.fetch_data(args.year, args.month)
+    else:
+        # Fetch all months (Jan-Dec)
+        print(f'📅 Fetching data for all months in {args.year}')
+        for month in range(1, 13):
+            print(f'\n--- Fetching month {month}/12 ---')
+            fetcher.fetch_data(args.year, month)
+    
     print('🆗 Step 1 Finished')
 
     # Step 2: Process the data
