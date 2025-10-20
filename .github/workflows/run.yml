@@ -4,8 +4,8 @@ on:
   workflow_dispatch:
     inputs:
       cli_args:
-        description: "Commands"
-        default: fetch
+        description: "Commands (e.g., 'fetch --year 2025' or 'fetch --year 2025 --month 6')"
+        default: "fetch --year 2026"
         required: true
 
 jobs:
@@ -13,10 +13,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: 📥 Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: 🐍🛠️ setup python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: "3.11"
 
