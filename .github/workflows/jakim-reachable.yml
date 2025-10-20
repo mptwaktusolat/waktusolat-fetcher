@@ -1,0 +1,59 @@
+name: Test e-solat.gov.my Reachability
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test-reachability:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+
+    steps:
+      - name: Test with curl
+        shell: bash
+        run: |
+          echo "Testing connectivity to https://www.e-solat.gov.my/index.php"
+          echo "Runner OS: ${{ matrix.os }}"
+          echo "---"
+
+          # Test with curl
+          if curl -I -L --max-time 30 -v https://www.e-solat.gov.my/index.php 2>&1; then
+            echo "✅ curl succeeded"
+          else
+            echo "❌ curl failed with exit code: $?"
+          fi
+
+      - name: Test with wget
+        if: runner.os != 'Windows'
+        run: |
+          echo "---"
+          echo "Testing with wget"
+          if wget --spider --timeout=30 -v https://www.e-solat.gov.my/index.php 2>&1; then
+            echo "✅ wget succeeded"
+          else
+            echo "❌ wget failed with exit code: $?"
+          fi
+
+      - name: Test DNS resolution
+        shell: bash
+        run: |
+          echo "---"
+          echo "Testing DNS resolution for www.e-solat.gov.my"
+          if command -v nslookup &> /dev/null; then
+            nslookup www.e-solat.gov.my
+          elif command -v dig &> /dev/null; then
+            dig www.e-solat.gov.my
+          else
+            echo "Neither nslookup nor dig available"
+          fi
+
+      - name: Test with custom headers
+        shell: bash
+        run: |
+          echo "---"
+          echo "Testing with User-Agent header"
+          curl -I -L --max-time 30 \
+            -H "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36" \
+            -v https://www.e-solat.gov.my/index.php 2>&1 || true
