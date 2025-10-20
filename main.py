@@ -26,34 +26,34 @@ def main():
 
 def fetch_flow(args):
     # Step 1: Fetch all zones data
-    print('🚀 Fetch flow started. Step 1 Started')
+    print('🚀 Fetch flow started. Step 1 Started', flush=True)
     
     if args.month:
         # Fetch specific month
-        print(f'📅 Fetching data for {args.year}-{args.month:02d}')
+        print(f'📅 Fetching data for {args.year}-{args.month:02d}', flush=True)
         fetcher.fetch_data(args.year, args.month)
     else:
         # Fetch all months (Jan-Dec)
-        print(f'📅 Fetching data for all months in {args.year}')
+        print(f'📅 Fetching data for all months in {args.year}', flush=True)
         for month in range(1, 13):
-            print(f'\n--- Fetching month {month}/12 ---')
+            print(f'\n--- Fetching month {month}/12 ---', flush=True)
             fetcher.fetch_data(args.year, month)
     
-    print('🆗 Step 1 Finished')
+    print('🆗 Step 1 Finished', flush=True)
 
     # Step 2: Process the data
-    print('🚀 Step 2 Started')
+    print('🚀 Step 2 Started', flush=True)
     processor.process_db()
-    print('🆗 Step 2 Finished')
+    print('🆗 Step 2 Finished', flush=True)
 
     # Step 3: Push to Firebase
     if args.no_push:
-        print('🚫 Skipping Step 3')
+        print('🚫 Skipping Step 3', flush=True)
         return
 
-    print('🚀 Step 3 started')
+    print('🚀 Step 3 started', flush=True)
     pusher.push_to_firebase()
-    print('🆗 Step 3 Finished')
+    print('🆗 Step 3 Finished', flush=True)
 
 
 if __name__ == '__main__':
